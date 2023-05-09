@@ -11,7 +11,7 @@
   </parent>
   <groupId>com.retailer.webshop</groupId>
   <artifactId>gui</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>gui</name>
   <description>gui</description>
   <properties>
