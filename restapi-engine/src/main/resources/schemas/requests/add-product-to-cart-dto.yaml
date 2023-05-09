@@ -1,0 +1,15 @@
+type: object
+description: Request body to add product(s) to the shopping cart
+properties:
+  productId:
+    type: integer
+    format: int64
+    description: Product unique ID
+    example: 1253876
+  quantity:
+    type: integer
+    description: Number of product(s) to be added to the shopping cart.
+    example: 3
+required:
+  - productId
+  - quantity

@@ -1,0 +1,17 @@
+type: object
+description: The product
+properties:
+  id:
+    type: integer
+    format: int64
+    description: Product's unique ID
+    example: 897123
+  name:
+    type: string
+    description: Product's name
+    example: Wooden wardrobe
+  price:
+    type: number
+    format: double
+    description: price
+    example: 100

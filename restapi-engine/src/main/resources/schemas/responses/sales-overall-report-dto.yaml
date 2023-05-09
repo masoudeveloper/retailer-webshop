@@ -1,0 +1,16 @@
+type: object
+properties:
+  date:
+    type: string
+    format: date
+    description: The date
+    example: 2023-04-25
+  saleAmount:
+    type: number
+    format: double
+    description: Amount
+    example: 100
+  detail:
+    type: array
+    items:
+      $ref: './product-report-dto.yaml'

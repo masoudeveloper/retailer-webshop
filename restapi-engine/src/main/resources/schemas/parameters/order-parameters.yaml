@@ -1,0 +1,9 @@
+queryParameters:
+  orderId:
+    in: query
+    name: orderId
+    required: false
+    description: Order ID
+    schema:
+      type: integer
+      format: int64

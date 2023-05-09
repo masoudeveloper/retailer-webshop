@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: Web-shop REST API spec
+  description: Web-shop REST API specifications
+  version: 1.0.1
+tags:
+  - name: product
+    description: All product related stuff
+  - name: cart
+    description: All shopping cart related stuff
+  - name: management
+    description: All management related stuff
+
+components:
+  schemas:
+    ProductDto:
+      $ref: 'schemas/responses/product-dto.yaml'
+    AddProductToCartDto:
+      $ref: 'schemas/requests/add-product-to-cart-dto.yaml'
+    CartDto:
+      $ref: 'schemas/responses/cart-dto.yaml'
+    CheckoutDto:
+      $ref: 'schemas/requests/checkout-dto.yaml'
+    OrderDto:
+      $ref: 'schemas/responses/order-dto.yaml'
+    ProductReportDto:
+      $ref: 'schemas/responses/product-report-dto.yaml'
+    SalesOverallReportDto:
+      $ref: 'schemas/responses/sales-overall-report-dto.yaml'
+
+paths:
+  /client-api/v1/products:
+    get:
+      operationId: getProducts
+      description: Get list of products
+      tags:
+        - product
+      parameters:
+        - $ref: 'schemas/parameters/product-parameters.yaml#/queryParameters/name'
+      responses:
+        200:
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        500:
+          description: Internal server error
+  /client-api/v1/carts/{cartId}/products:
+    post:
+      operationId: addProductToCart
+      description: Add a product to shopping cart
+      tags:
+        - cart
+      parameters:
+        - $ref: 'schemas/parameters/product-parameters.yaml#/pathParameters/cartId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProductToCartDto'
+      responses:
+        200:
+          description: Product(s) added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartDto'
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+  /client-api/v1/carts/{cartId}:
+    get:
+      operationId: getCart
+      description: Get a cart
+      tags:
+        - cart
+      parameters:
+        - $ref: 'schemas/parameters/product-parameters.yaml#/pathParameters/cartId'
+      responses:
+        200:
+          description: Cart content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartDto'
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+  /client-api/v1/carts:
+    post:
+      operationId: createCart
+      description: Create a cart
+      tags:
+        - cart
+      responses:
+        200:
+          description: Cart content.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartDto'
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+
+  /client-api/v1/carts/{cartId}/checkout:
+    post:
+      operationId: doCheckout
+      description: Checkout the cart
+      tags:
+        - cart
+      parameters:
+        - $ref: 'schemas/parameters/product-parameters.yaml#/pathParameters/cartId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutDto'
+      #            example:
+      responses:
+        200:
+          description: Shopping cart is checked out successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+  /management-api/v1/orders/search:
+    get:
+      operationId: getOrder
+      description: Get list of orders
+      tags:
+        - management
+      parameters:
+        - $ref: 'schemas/parameters/order-parameters.yaml#/queryParameters/orderId'
+      responses:
+        200:
+          description: Get order by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        500:
+          description: Internal server error
+
+  /management-api/v1/reports/top-sales:
+    get:
+      operationId: getTopFiveSalesReport
+      description: Top x selling products of a specific date
+      tags:
+        - management
+      parameters:
+        - $ref: 'schemas/parameters/report-parameters.yaml#/queryParameters/date'
+      responses:
+        200:
+          description: List of top 5 sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductReportDto'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /management-api/v1/reports/least-sales:
+    get:
+      operationId: getLeastFiveSalesReport
+      description: Least five selling products of the month
+      tags:
+        - management
+      parameters:
+        - $ref: 'schemas/parameters/report-parameters.yaml#/queryParameters/year'
+        - $ref: 'schemas/parameters/report-parameters.yaml#/queryParameters/month'
+      responses:
+        200:
+          description: List of five least sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductReportDto'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /management-api/v1/reports/sales-overall:
+    get:
+      operationId: getOverallSalesReport
+      description: Overall sales report for custom dates range.
+      tags:
+        - management
+      parameters:
+        - $ref: 'schemas/parameters/report-parameters.yaml#/queryParameters/from'
+        - $ref: 'schemas/parameters/report-parameters.yaml#/queryParameters/to'
+      responses:
+        200:
+          description: List of sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SalesOverallReportDto'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error

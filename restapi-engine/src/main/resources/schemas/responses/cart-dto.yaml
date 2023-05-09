@@ -1,0 +1,16 @@
+type: object
+description: The shopping cart
+properties:
+  id:
+    type: string
+    description: Shopping cart's unique ID
+    example: c49740ee-91fd-41fb-9c65-fc212e246af2
+  cartItems:
+    type: array
+    items:
+      $ref: './cart-item-dto.yaml'
+  totalAmount:
+    type: number
+    format: double
+    description: Amount
+    example: 100

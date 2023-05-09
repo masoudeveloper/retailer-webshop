@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webshop test page</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+</head>
+<body>
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+         aria-controls="tab1" aria-selected="true">Customer</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab"
+         aria-controls="tab1" aria-selected="true">Show Order</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab"
+         aria-controls="tab3" aria-selected="false">Reports</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+      <br/>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <form id="createCardForm">
+              <button class="btn btn-primary" type="submit">Create Cart</button>
+              <input type="hidden" id="cartId" name="cartId">
+            </form>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <pre id="response"></pre>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div>
+        <form id="productSearchForm">
+          <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" class="form-control" id="productName" name="name">
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div class="table-responsive mt-3">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="productTableBody">
+            </tbody>
+          </table>
+          <h4>Cart Details</h4>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Cart ID</th>
+              <th>Total Amount</th>
+              <th>Cart Items</th>
+            </tr>
+            </thead>
+            <tbody id="cartTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+      <div class="row">
+        <form id="orderSearchForm">
+          <div class="col-md-4">
+            <label for="orderId">Order ID:</label>
+            <input type="text" id="orderId" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label></label>
+            <button type="button" id="orderSearchBtn" class="btn btn-primary">Search</button>
+          </div>
+        </form>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Order Details</h3>
+          <table class="table table-bordered" id="orderResult">
+            <tr>
+              <td>Order ID</td>
+              <td id="orderIdValue"></td>
+            </tr>
+            <tr>
+              <td>Total Amount</td>
+              <td id="totalAmountValue"></td>
+            </tr>
+            <tr>
+              <td>Created At</td>
+              <td id="createdAtValue"></td>
+            </tr>
+            <tr>
+              <td>First Name</td>
+              <td id="firstNameValue"></td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td id="lastNameValue"></td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td id="addressValue"></td>
+            </tr>
+            <tr>
+              <td>Mobile</td>
+              <td id="mobileValue"></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td id="emailValue"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Order Items</h3>
+          <table class="table table-bordered" id="orderItemsResult">
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Total Amount</th>
+            </tr>
+            <tbody id="orderItemsTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+      <h4>Login</h4>
+      <h5>Keep the username and password there for all requests</h5>
+      <form id="loginForm" action="http://localhost:8080/webshop-restapi-engine/login"
+            method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="admin" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" value="admin" required>
+        <br>
+      </form>
+      <hr/>
+      <div>
+        <h4 class="text-center">Least Sales Report</h4>
+        <div class="form-group row mt-3">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="year">Select Year:</label>
+              <select id="year">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023" selected>2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2031</option>
+                <option value="2032">2032</option>
+                <option value="2033">2033</option>
+                <option value="2034">2034</option>
+                <option value="2035">2035</option>
+                <option value="2036">2036</option>
+                <option value="2037">2037</option>
+                <option value="2038">2038</option>
+                <option value="2039">2039</option>
+                <option value="2040">2040</option>
+                <option value="2041">2041</option>
+                <option value="2042">2042</option>
+                <option value="2043">2043</option>
+                <option value="2044">2044</option>
+                <option value="2045">2045</option>
+                <option value="2046">2046</option>
+                <option value="2047">2047</option>
+                <option value="2048">2048</option>
+                <option value="2049">2049</option>
+                <option value="2050">2050</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="month">Select Month:</label>
+              <select id="month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5" selected>May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" id="getLeastSalesReportBtn">Get Report
+            </button>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Sold Quantity</th>
+            <th>Available Quantity</th>
+            <th>Total Sale Amount</th>
+          </tr>
+          </thead>
+          <tbody id="reportLeastSalesTableBody">
+          </tbody>
+        </table>
+      </div>
+      <hr/>
+      <div>
+        <h4 class="text-center">Top Sales Report</h4>
+        <div class="form-group row mt-3">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="datepicker">Select Date:</label>
+              <input type="text" class="form-control" id="datepicker">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" id="getTopSalesReportBtn">Get Report
+            </button>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Sold Quantity</th>
+            <th>Available Quantity</th>
+            <th>Total Sale Amount</th>
+          </tr>
+          </thead>
+          <tbody id="reportTopSalesTableBody">
+          </tbody>
+        </table>
+      </div>
+      <hr/>
+      <div>
+        <h4 class="text-center">Overall Sales Report</h4>
+        <div class="form-group row mt-3">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="datepicker_from">Select From Date:</label>
+              <input type="text" class="form-control" id="datepicker_from">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="datepicker_to">Select To Date:</label>
+              <input type="text" class="form-control" id="datepicker_to">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" id="getOverallSalesReportBtn">Get Report
+            </button>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Sold Quantity</th>
+            <th>Available Quantity</th>
+            <th>Total Sale Amount</th>
+          </tr>
+          </thead>
+          <tbody id="reportOverallSalesTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Create a cart
+  const createCardForm = document.getElementById('createCardForm');
+  const response = document.querySelector('#response');
+  const cartIdField = document.querySelector('#cartId');
+  createCardForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const responseJson = await fetch('http://localhost:8080/client-api/v1/carts',
+        {method: 'POST'}).then(response => response.json());
+    response.textContent = "The created cart id is: " + JSON.stringify(responseJson.id, null, 2);
+    cartIdField.value = responseJson.id;
+  });
+
+  // Search products
+  const productSearchForm = document.getElementById('productSearchForm');
+  productSearchForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const productName = document.getElementById('productName').value;
+    fetch(`http://localhost:8080/client-api/v1/products?name=${productName}`)
+    .then(response => response.json())
+    .then(data => {
+      const tableBody = document.getElementById('productTableBody');
+      tableBody.innerHTML = '';
+      data.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${product.id}</td>
+            <td>${product.name}</td>
+            <td>€${product.price.toFixed(2)}</td>
+            <td><input type="number" min="1" value="1"></td>
+            <td><button type="button" class="btn btn-primary addToCart" data-product-id="${product.id}">Add to Cart</button></td>
+          `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Failed to fetch products. Please try again later.');
+    });
+  });
+
+  // Add product(s) to the cart
+  const productTableBody = document.getElementById('productTableBody');
+  productTableBody.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('addToCart')) {
+      const productId = e.target.dataset.productId;
+      const quantity = e.target.parentNode.previousElementSibling.firstChild.value;
+      const response = await fetch(
+          'http://localhost:8080/client-api/v1/carts/' + cartIdField.value + '/products', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              productId,
+              quantity
+            })
+          });
+      const responseJson = await response.json();
+      const tableBody = document.getElementById('cartTableBody');
+      const row = document.createElement('tr');
+      const itemStrings = responseJson.cartItems.map(
+          item => `[${item.quantity}] ${item.product.name} -> €${item.totalAmount}`);
+      const cartItemsString = itemStrings.join(", ");
+      row.innerHTML = `
+        <td>${responseJson.id}</td>
+        <td>€${responseJson.totalAmount.toFixed(2)}</td>
+        <td>${cartItemsString}</td>
+      `;
+      tableBody.innerHTML = '';
+      tableBody.appendChild(row);
+      const checkoutRow = document.createElement('tr');
+      checkoutRow.innerHTML = `
+        <td colspan="3">
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="firstName">First name:</label>
+              <input type="text" class="form-control" id="firstName" value="John">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName">Last name:</label>
+              <input type="text" class="form-control" id="lastName" value="Smith">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-12 mb-3">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" value="Amsterdam, ...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="mobile">Mobile:</label>
+              <input type="tel" class="form-control" id="mobile" required value="+3161234567">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" required value="info@gmail.com">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary doCheckout" data-cart-id="${responseJson.id}">Checkout</button>
+        </td>
+      `;
+      tableBody.appendChild(checkoutRow);
+    }
+  });
+
+  // Do checkout
+  const cartTableBody = document.getElementById('cartTableBody');
+  cartTableBody.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('doCheckout')) {
+      const cartId = e.target.dataset.cartId;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+      const mobile = document.getElementById('mobile').value;
+      const response = await fetch(
+          'http://localhost:8080/client-api/v1/carts/' + cartId + '/checkout', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              firstName,
+              lastName,
+              address,
+              email,
+              mobile
+            })
+          });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        alert('Your cart has been checked out successfully! The order id is ' + data.id);
+        document.getElementById('cartTableBody').innerHTML = '';
+        document.getElementById('productTableBody').innerHTML = '';
+        document.getElementById('productName').value = '';
+        document.getElementById('cartId').value = '';
+        document.getElementById('response').innerHTML = '';
+      }
+    }
+  });
+
+  // Top sales report
+  const reportTopSalesTableBody = document.getElementById('reportTopSalesTableBody');
+  const getTopSalesReportBtn = document.getElementById('getTopSalesReportBtn');
+  const datePicker = document.querySelector('#datepicker');
+
+  getTopSalesReportBtn.addEventListener('click', async () => {
+    const username = document.querySelector('#username').value;
+    const password = document.querySelector('#password').value;
+    const url = `http://localhost:8080/management-api/v1/reports/top-sales?date=${datePicker.value}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(username + ':' + password)
+      }
+    });
+    const responseJson = await response.json();
+
+    let tableRows = '';
+    responseJson.forEach(report => {
+      const rowClass = report.isLowQuantity ? 'bg-danger' : '';
+      tableRows += `
+      <tr class="${rowClass}">
+        <td>${report.productId}</td>
+        <td>${report.productName}</td>
+        <td>${report.soldQuantity}</td>
+        <td>${report.availableQuantity}</td>
+        <td>€${report.totalSaleAmount}</td>
+      </tr>
+    `;
+    });
+
+    reportTopSalesTableBody.innerHTML = tableRows;
+  });
+
+  // Least sales report
+  const reportLeastSalesTableBody = document.getElementById('reportLeastSalesTableBody');
+  const getLeastSalesReportBtn = document.getElementById('getLeastSalesReportBtn');
+  const year = document.querySelector('#year');
+  const month = document.querySelector('#month');
+
+  getLeastSalesReportBtn.addEventListener('click', async () => {
+    const username = document.querySelector('#username').value;
+    const password = document.querySelector('#password').value;
+    const url = `http://localhost:8080/management-api/v1/reports/least-sales?year=${year.value}&month=${month.value}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(username + ':' + password)
+      }
+    });
+    const responseJson = await response.json();
+
+    let tableRows = '';
+    responseJson.forEach(report => {
+      const rowClass = report.isLowQuantity ? 'bg-danger' : '';
+      tableRows += `
+      <tr class="${rowClass}">
+        <td>${report.productId}</td>
+        <td>${report.productName}</td>
+        <td>${report.soldQuantity}</td>
+        <td>${report.availableQuantity}</td>
+        <td>€${report.totalSaleAmount}</td>
+      </tr>
+    `;
+    });
+
+    reportLeastSalesTableBody.innerHTML = tableRows;
+  });
+
+  // Overall sales report
+  const reportOverallSalesTableBody = document.getElementById('reportOverallSalesTableBody');
+  const getOverallSalesReportBtn = document.getElementById('getOverallSalesReportBtn');
+  const datePickerFrom = document.querySelector('#datepicker_from');
+  const datePickerTo = document.querySelector('#datepicker_to');
+
+  getOverallSalesReportBtn.addEventListener('click', async () => {
+    const username = document.querySelector('#username').value;
+    const password = document.querySelector('#password').value;
+    const url = `http://localhost:8080/management-api/v1/reports/sales-overall?from=${datePickerFrom.value}&to=${datePickerTo.value}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(username + ':' + password)
+      }
+    });
+    const responseJson = await response.json();
+
+    let tableRows = '';
+
+    responseJson.forEach(report => {
+      tableRows += `
+      <tr>
+        <td colspan="5" style="text-align: center; font-weight: bold;">Date: ${report.date}</td>
+      </tr>
+    `;
+
+      report.detail.forEach(item => {
+        const rowClass = item.isLowQuantity ? 'bg-danger' : '';
+
+        tableRows += `
+      <tr class="${rowClass}">
+        <td>${item.productId}</td>
+        <td>${item.productName}</td>
+        <td>${item.soldQuantity}</td>
+        <td>${item.availableQuantity}</td>
+        <td>€${item.totalSaleAmount}</td>
+      </tr>
+    `;
+      });
+    });
+
+    reportOverallSalesTableBody.innerHTML = tableRows;
+  });
+
+  // Load order by id
+  const orderIdInput = document.getElementById('orderId');
+  const orderSearchBtn = document.getElementById('orderSearchBtn');
+  const orderIdValue = document.getElementById('orderIdValue');
+  const totalAmountValue = document.getElementById('totalAmountValue');
+  const createdAtValue = document.getElementById('createdAtValue');
+  const firstNameValue = document.getElementById('firstNameValue');
+  const lastNameValue = document.getElementById('lastNameValue');
+  const addressValue = document.getElementById('addressValue');
+  const mobileValue = document.getElementById('mobileValue');
+  const emailValue = document.getElementById('emailValue');
+  const orderItemsTableBody = document.getElementById('orderItemsTableBody');
+
+  orderSearchBtn.addEventListener('click', () => {
+    const orderId = orderIdInput.value;
+    const username = document.querySelector('#username').value;
+    const password = document.querySelector('#password').value;
+    const url = `http://localhost:8080/management-api/v1/orders/search?orderId=${orderId}`
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa('admin' + ':' + 'admin')
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      orderIdValue.innerText = data.id;
+      totalAmountValue.innerText = data.totalAmount;
+      createdAtValue.innerText = data.createdAt;
+      firstNameValue.innerText = data.customer.firstName;
+      lastNameValue.innerText = data.customer.lastName;
+      addressValue.innerText = data.customer.address;
+      mobileValue.innerText = data.customer.mobile;
+      emailValue.innerText = data.customer.email;
+
+      orderItemsTableBody.innerHTML = '';
+      data.orderItems.forEach(item => {
+        const row = document.createElement('tr');
+        const productName = document.createElement('td');
+        const quantity = document.createElement('td');
+        const totalAmount = document.createElement('td');
+        productName.innerText = item.product.name;
+        quantity.innerText = item.quantity;
+        totalAmount.innerText = '€' + item.totalAmount;
+        row.appendChild(productName);
+        row.appendChild(quantity);
+        row.appendChild(totalAmount);
+        orderItemsTableBody.appendChild(row);
+      });
+    })
+    .catch(error => console.error(error));
+  });
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+  $('#datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+    todayHighlight: true,
+  });
+  $('#datepicker_from').datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+    todayHighlight: true,
+  });
+  $('#datepicker_to').datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+    todayHighlight: true,
+  });
+</script>
+
+</body>
+</html>

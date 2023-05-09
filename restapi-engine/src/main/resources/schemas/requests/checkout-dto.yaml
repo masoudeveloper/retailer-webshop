@@ -1,0 +1,23 @@
+type: object
+description: Checkout object
+properties:
+  firstName:
+    type: string
+    description: Customer first name
+  lastName:
+    type: string
+    description: Customer last name
+  address:
+    type: string
+    description: Customer address
+  mobile:
+    type: string
+    description: Customer mobile number
+    example: +3161234567
+  email:
+    type: string
+    description: Customer email address
+    example: info@gmail.com
+required:
+  - mobile
+  - email

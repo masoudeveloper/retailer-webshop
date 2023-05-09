@@ -1,0 +1,13 @@
+type: object
+description: The product in an order
+properties:
+  product:
+    $ref: './product-dto.yaml'
+  quantity:
+    type: integer
+    description: The quantity of product
+  totalAmount:
+    type: number
+    format: double
+    description: Amount
+    example: 100

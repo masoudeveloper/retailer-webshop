@@ -1,0 +1,299 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cart_items
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: INT
+              - column:
+                  name: cart_id
+                  type: UUID
+              - column:
+                  name: total_amount
+                  type: DOUBLE
+            tableName: cart_items
+  - changeSet:
+      id: 2
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_carts
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: total_amount
+                  type: DOUBLE
+            tableName: carts
+  - changeSet:
+      id: 3
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_customer
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: mobile
+                  type: VARCHAR(255)
+            tableName: customer
+  - changeSet:
+      id: 4
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_order_items
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: INT
+              - column:
+                  name: total_amount
+                  type: DOUBLE
+            tableName: order_items
+  - changeSet:
+      id: 5
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_orders
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: total_amount
+                  type: DOUBLE
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: customer_id
+                  type: BIGINT
+            tableName: orders
+  - changeSet:
+      id: 6
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_products
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: DOUBLE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: available_quantity
+                  type: INT
+            tableName: products
+  - changeSet:
+      id: 7
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: cart_items
+            constraintName: FK_CART_ITEMS_ON_CART
+            referencedColumnNames: id
+            referencedTableName: carts
+  - changeSet:
+      id: 8
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: cart_items
+            constraintName: FK_CART_ITEMS_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: products
+  - changeSet:
+      id: 9
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: orders
+            constraintName: FK_ORDERS_ON_CUSTOMER
+            referencedColumnNames: id
+            referencedTableName: customer
+  - changeSet:
+      id: 10
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_items
+            constraintName: FK_ORDER_ITEMS_ON_ORDER
+            referencedColumnNames: id
+            referencedTableName: orders
+  - changeSet:
+      id: 11
+      author: M
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: order_items
+            constraintName: FK_ORDER_ITEMS_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: products
+  - changeSet:
+      id: 12
+      author: M
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Wardrobe
+              - column:
+                  name: price
+                  value: 10
+              - column:
+                  name: available_quantity
+                  value: 50
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Chair
+              - column:
+                  name: price
+                  value: 20
+              - column:
+                  name: available_quantity
+                  value: 50
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Desk
+              - column:
+                  name: price
+                  value: 30
+              - column:
+                  name: available_quantity
+                  value: 50
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Book
+              - column:
+                  name: price
+                  value: 5
+              - column:
+                  name: available_quantity
+                  value: 50
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Pencil
+              - column:
+                  name: price
+                  value: 2
+              - column:
+                  name: available_quantity
+                  value: 50
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: name
+                  value: Drawer
+              - column:
+                  name: price
+                  value: 25
+              - column:
+                  name: available_quantity
+                  value: 50
